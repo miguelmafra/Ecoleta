@@ -10,3 +10,8 @@ const connection = knex({
 });
 
 export default connection;
+
+
+//Migration - Histórico do banco de dados 
+
+//
