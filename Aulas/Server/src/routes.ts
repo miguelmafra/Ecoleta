@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { request, response } from 'express';
 import knex from './database/connection';
 const routes = express.Router();
 
@@ -16,5 +16,31 @@ routes.get('/items', async (request, response) => {
 
 });
 
+
+routes.post('/points', async (request,response) =>{
+    const {
+        name,
+        email,
+        whatsapp,
+        latitude,
+        longitude,
+        city,
+        uf,
+        items
+    } = request.body;
+
+    await knex('points').insert({
+        image: 'image-fake',
+        name,
+        email,
+        whatsapp,
+        latitude,
+        longitude,
+        city,
+        uf,
+    });
+
+    return response.json({sucess: true});
+});
 
 export default routes;
