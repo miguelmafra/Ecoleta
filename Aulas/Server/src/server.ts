@@ -1,10 +1,12 @@
 import express, { request, response } from 'express';
 import routes from './routes';
+import path from "path";
 
 const app = express();
 
 app.use(express.json());
 app.use(routes);
+
 // Rota: Endereço completo da requisição (exemplo localhost:3333/users)
 // Recurso: Qual entidade estamos acessando do sistema (exemplo /users)
 
@@ -21,13 +23,7 @@ app.use(routes);
 //SQl tradicional: SELECT * FROM users WHERE name = 'Diego'
 //Com Knex: knex('users).where('name', 'Diego).select ('*')
 
-const users = [
-    'Miguel',
-    'Lucas',
-    'Alex',
-    'Daniel'
-];
-
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
 
 
 app.listen(3333);
