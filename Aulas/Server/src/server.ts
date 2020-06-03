@@ -1,8 +1,10 @@
 import express, { request, response } from 'express';
+import routes from './routes';
 
 const app = express();
 
 app.use(express.json());
+app.use(routes);
 // Rota: Endereço completo da requisição (exemplo localhost:3333/users)
 // Recurso: Qual entidade estamos acessando do sistema (exemplo /users)
 
@@ -26,35 +28,6 @@ const users = [
     'Daniel'
 ];
 
-//lista todos os usuários do array
-app.get('/users', (request, response) => {
-    const search = String(request.query.search);
 
-    const filteredUsers = search ? users.filter(users => users.includes(search)) : users;
-
-    return response.json(filteredUsers);
-});
-
-//lista um usuário especifico conforme o ID procurado
-app.get('/users/:id', (request, response) => {
-    const id = Number(request.params.id);
-
-    const user = users[id];
-
-    return response.json(user);
-});
-
-//cria um usuário
-app.post('/users', (request, response) => {
-
-    const data = request.body;
-    
-    const user = {
-        name: data.name,
-        email: data.email
-    };
-
-    return response.json(user);
-});
 
 app.listen(3333);
