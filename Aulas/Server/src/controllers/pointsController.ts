@@ -7,12 +7,13 @@ class PointsController{
         //cidade , uf, items (Query params)
         const {city, uf, items} = request.query;
 
-        const parsedItems = String(items).split(',')
+        const parsedItems = String(items)
+        .split(',')
         .map(items => Number(items.trim()));
 
         const points =  await knex('points')
         .join('point_items', 'points.id', '=', 'point_items.point_id')
-        .whereIn('point_items.point_id', parsedItems)
+        .whereIn('point_items.item_id', parsedItems)
         .where('city', String(city))
         .where('uf', String(uf))
         .distinct()
@@ -75,8 +76,11 @@ class PointsController{
                 point_id,
             };
         })
+
         await trx('point_items').insert(pointItems);
     
+        await trx.commit();
+
         return response.json({
         id: point_id,
         ...point,

@@ -1,9 +1,12 @@
 import express, { request, response } from 'express';
 import routes from './routes';
 import path from "path";
-
+import cors from 'cors';
 const app = express();
 
+app.use(cors(
+    //é possível colocar o caminho do dominio usando origin: 'wwww.'...
+));
 app.use(express.json());
 app.use(routes);
 
